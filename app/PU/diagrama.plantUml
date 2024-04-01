@@ -1,0 +1,70 @@
+@startuml
+
+package "Zoológico" {
+    class Animal {
+        + int id
+        + string nombre
+        + Especie especie
+        + Recinto[] recintos
+        + Cuidador cuidador
+    }
+
+    class Especie {
+        + int id
+        + string nombre
+        + Recinto[] recintosAsociados
+        + Animal[] animales
+    }
+
+    class Recinto {
+        + int id
+        + string nombre
+        + string necesidadesEspecificas
+        + Especie[] especies
+        + Animal[] animales
+    }
+
+    class Cuidador {
+        + int id
+        + string nombre
+        + string especialidad
+        + Animal[] animalesACargo
+    }
+
+    class Actividad {
+        + int id
+        + string nombre
+        + DateTime fecha
+        + Animal[] animalesAsociados
+    }
+
+    class AnimalRecinto {
+        + int id
+        + int animal_id
+        + int recinto_id
+    }
+
+    class AnimalActividad {
+        + int id
+        + int animal_id
+        + int actividad_id
+    }
+
+    class CuidadorAnimal {
+        + int id
+        + int cuidador_id
+        + int animal_id
+    }
+
+    Animal "0..*" -- "*" Actividad : participa en
+    Recinto "0..*" -- "*" Especie : alberga
+    Cuidador "0..*" -- "*" Animal : cuida
+    Animal -- AnimalRecinto
+    Especie -- Recinto : asociada con
+    Especie -- Animal : tiene
+    Recinto -- Animal : puede alojar
+    Cuidador -- CuidadorAnimal
+    Animal -- AnimalActividad
+}
+
+@enduml
